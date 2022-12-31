@@ -1,0 +1,3 @@
+[submodule "partner"]
+	path = partner
+	url = https://github.com/winanjuar/kezbek-partner.git
