@@ -1,3 +1,6 @@
 [submodule "partner"]
 	path = partner
 	url = https://github.com/winanjuar/kezbek-partner.git
+[submodule "authenticator"]
+	path = authenticator
+	url = https://github.com/winanjuar/kezbek-authenticator.git
