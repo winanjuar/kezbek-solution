@@ -4,3 +4,6 @@
 [submodule "authenticator"]
 	path = authenticator
 	url = https://github.com/winanjuar/kezbek-authenticator.git
+[submodule "customer"]
+	path = customer
+	url = https://github.com/winanjuar/kezbek-customer.git
