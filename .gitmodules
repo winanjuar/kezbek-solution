@@ -13,3 +13,12 @@
 [submodule "promo"]
 	path = promo
 	url = https://github.com/winanjuar/kezbek-promo.git
+[submodule "mailer"]
+	path = mailer
+	url = https://github.com/winanjuar/kezbek-mailer.git
+[submodule "wallet"]
+	path = wallet
+	url = https://github.com/winanjuar/kezbek-wallet.git
+[submodule "loyalty"]
+	path = loyalty
+	url = https://github.com/winanjuar/kezbek-loyalty.git
