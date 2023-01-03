@@ -7,3 +7,9 @@
 [submodule "customer"]
 	path = customer
 	url = https://github.com/winanjuar/kezbek-customer.git
+[submodule "transaction"]
+	path = transaction
+	url = https://github.com/winanjuar/kezbek-transaction.git
+[submodule "promo"]
+	path = promo
+	url = https://github.com/winanjuar/kezbek-promo.git
