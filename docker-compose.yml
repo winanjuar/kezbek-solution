@@ -1,2 +1,238 @@
-version: '3.9'
+version: '3'
+
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    restart: on-failure
+    container_name: rabbitmq
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbit
+      - RABBITMQ_DEFAULT_PASS=S3cret
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend
+
+  redis:
+    image: redis:latest
+    restart: on-failure
+    container_name: redis
+    hostname: redis
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+  postgresql:
+    image: postgres:latest
+    restart: on-failure
+    container_name: postgresql
+    hostname: postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_DB=postgres
+      - TZ=Asia/Jakarta
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+      - ./init-postgre.sql:/docker-entrypoint-initdb.d/init-postgre.sql
+    networks:
+      - backend
+
+  mysql:
+    image: mysql:latest
+    restart: on-failure
+    container_name: mysql
+    hostname: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=S3cret
+      - TZ=Asia/Jakarta
+    volumes:
+      - ./init-mysql.sql:/docker-entrypoint-initdb.d/init-mysql.sql
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend
+
+  authenticator:
+    build:
+      context: ./authenticator
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: authenticator
+    hostname: authenticator
+    env_file:
+      - ./authenticator/compose.env
+    ports:
+      - "8001:9001"
+    volumes:
+      - ./authenticator:/var/www/authenticator
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - redis
+
+  customer:
+    build:
+      context: ./customer
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: customer
+    hostname: customer
+    env_file:
+      - ./customer/compose.env
+    ports:
+      - "8002:9002"
+    volumes:
+      - ./customer:/var/www/customer
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - redis
+      - mysql
+
+  loyalty:
+    build:
+      context: ./loyalty
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: loyalty
+    hostname: loyalty
+    env_file:
+      - ./loyalty/compose.env
+    ports:
+      - "8003:9003"
+    volumes:
+      - ./loyalty:/var/www/loyalty
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - redis
+      - postgresql
+
+  mailer:
+    build:
+      context: ./mailer
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: mailer
+    hostname: mailer
+    env_file:
+      - ./mailer/compose.env
+    ports:
+      - "8004:9004"
+    volumes:
+      - ./mailer:/var/www/mailer
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - redis
+
+  partner:
+    build:
+      context: ./partner
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: partner
+    hostname: partner
+    env_file:
+      - ./partner/compose.env
+    ports:
+      - "8005:9005"
+    volumes:
+      - ./partner:/var/www/partner
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - redis
+      - mysql
+  
+  promo:
+    build:
+      context: ./promo
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: promo
+    hostname: promo
+    env_file:
+      - ./promo/compose.env
+    ports:
+      - "8006:9006"
+    volumes:
+      - ./promo:/var/www/promo
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - redis
+      - mysql
+
+  transaction:
+    build:
+      context: ./transaction
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: transaction
+    hostname: transaction
+    env_file:
+      - ./transaction/compose.env
+    ports:
+      - "8007:9007"
+    volumes:
+      - ./transaction:/var/www/transaction
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - redis
+      - postgresql
+
+  wallet:
+    build:
+      context: ./wallet
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: wallet
+    hostname: wallet
+    env_file:
+      - ./wallet/compose.env
+    ports:
+      - "8008:9008"
+    volumes:
+      - ./wallet:/var/www/wallet
+    networks:
+      - backend
+    depends_on:
+      - rabbitmq
+      - redis
+      - postgresql
+    
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  rabbitmq-data:
+    driver: local
+  redis-data:
+    driver: local
+  postgresql-data:
+    driver: local
+  mysql-data:
+    driver: local
+    
 
