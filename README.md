@@ -8,7 +8,12 @@ Secara sistem, KezBek Solution merupakan keseluruhan sistem yang saling terinteg
 
 ![Metarepo Approach](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/metarepo.jpg?raw=true "Metarepo Approach")
 
+Setiap services memungkinkan untuk menggunakan tech stack yang berbeda. Seperti Service authenticator menggunakan AWS Cognito, service mailer menggunakan AWS SES, service transaction menggunakan PostgreSQL sementara service customer menggunakan MySQL.
+
 ![System Architecture](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/arsitektur.jpg?raw=true "System Architecture")
+
+Meskipun tech stack yang digunakan berbeda, namun secara keseluruhan service services ini dapat saling berkomunikasi satu dengan lainnya menggunakan tranport RabbitMQ sehingga dapat menjawab kebutuhan KezBek Solution.
+![Communication Strategy](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/communication.jpg?raw=true "Communication Strategy")
 
 ## Referensi
 
