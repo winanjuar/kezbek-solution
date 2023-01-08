@@ -15,10 +15,36 @@ Setiap services memungkinkan untuk menggunakan tech stack yang berbeda. Seperti 
 Meskipun tech stack yang digunakan berbeda, namun secara keseluruhan service services ini dapat saling berkomunikasi satu dengan lainnya menggunakan tranport RabbitMQ sehingga dapat menjawab kebutuhan KezBek Solution.
 ![Communication Strategy](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/communication.jpg?raw=true "Communication Strategy")
 
+Berikut adalah rancangan DB yang ada di KezBek Solution.
+![Database](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/table-1.jpg?raw=true "Database")
+![Database](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/table-2.jpg?raw=true "Database")
+
+## Running di local
+- Karena menggunakan metarepo, lakukan `git clone` pada metareponya kezbek-solution.
+- Gunakan `git submodule update --init --recursive` untuk update/fetch submodules.
+- Setup env variables untuk setiap submodule repo sesuai dengan contoh file `example.env` yang sudah disiapkan. 
+- Jalankan perintah `docker-compose up`
+- Setelah semua service up, dapat langsung dicoba.
+- Untuk setiap service terdapat documentasi menggunakan swagger, contoh service authenticator: http://localhost:8001/apidoc. Untuk detail port yang digunakan adalah sebagai berikut:
+1. Service Authenticator : 8001
+2. Service Customer : 8002
+3. Service Loyalty : 8003
+4. Service Mailer : 8004
+5. Service Partner : 8005
+6. Service Promo : 8006
+7. Service Transaction: 8007
+8. Service Wallet : 8008
+
+
+![Container Running](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/container.jpg?raw=true "Container Running")
+
+## Asumsi
+1. Proses transaksi dilakukan di partner
+2. Data yang dikirim ke KezBek Solution adalah data transaksi yang sudah complete dari partner. KezBek Solutin menghandle proses perhitungan cashback, transfer balance wallet dan send email notifikasi.
+
 ## Referensi
 
 [Creating separate monorepo CI/CD pipelines with GitHub Actions](https://blog.logrocket.com/creating-separate-monorepo-ci-cd-pipelines-github-actions/)
-
 [Monorepo, Manyrepo, Metarepo](https://notes.burke.libbey.me/metarepo/)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
