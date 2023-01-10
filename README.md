@@ -22,18 +22,18 @@ Berikut adalah rancangan DB yang ada di KezBek Solution.
 ## Running di local
 - Karena menggunakan metarepo, lakukan `git clone` pada metareponya kezbek-solution.
 - Gunakan `git submodule update --init --recursive` untuk update/fetch submodules.
-- Setup env variables untuk setiap submodule repo sesuai dengan contoh file `example.env` yang sudah disiapkan. 
+- Setup env variables untuk setiap submodule repo sesuai dengan contoh file `compose.env` yang sudah disiapkan.
 - Jalankan perintah `docker-compose up`
 - Setelah semua service up, dapat langsung dicoba.
 - Untuk setiap service terdapat documentasi menggunakan swagger, contoh service authenticator: http://localhost:8001/apidoc. Untuk detail port yang digunakan adalah sebagai berikut:
-1. Service Authenticator : 8001
-2. Service Customer : 8002
-3. Service Loyalty : 8003
-4. Service Mailer : 8004
-5. Service Partner : 8005
-6. Service Promo : 8006
-7. Service Transaction: 8007
-8. Service Wallet : 8008
+1. [Service Authenticator](http://localhost:8001/apidoc/)
+2. [Service Customer](http://localhost:8002/apidoc/)
+3. [Service Loyalty](http://localhost:8003/apidoc/)
+4. [Service Mailer](http://localhost:8004/apidoc/)
+5. [Service Partner](http://localhost:8005/apidoc/)
+6. [Service Promo](http://localhost:8006/apidoc/)
+7. [Service Transaction](http://localhost:8007/apidoc/)
+8. [Service Wallet](http://localhost:8008/apidoc/)
 
 
 ![Container Running](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/container.jpg?raw=true "Container Running")
@@ -45,6 +45,7 @@ Berikut adalah rancangan DB yang ada di KezBek Solution.
 ## Referensi
 
 [Creating separate monorepo CI/CD pipelines with GitHub Actions](https://blog.logrocket.com/creating-separate-monorepo-ci-cd-pipelines-github-actions/)
+
 [Monorepo, Manyrepo, Metarepo](https://notes.burke.libbey.me/metarepo/)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
