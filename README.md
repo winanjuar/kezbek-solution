@@ -13,28 +13,41 @@ Setiap services memungkinkan untuk menggunakan tech stack yang berbeda. Seperti 
 ![System Architecture](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/arsitektur.jpg?raw=true "System Architecture")
 
 Meskipun tech stack yang digunakan berbeda, namun secara keseluruhan service services ini dapat saling berkomunikasi satu dengan lainnya menggunakan tranport RabbitMQ sehingga dapat menjawab kebutuhan KezBek Solution.
+
 ![Communication Strategy](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/communication.jpg?raw=true "Communication Strategy")
 
 Berikut adalah rancangan DB yang ada di KezBek Solution.
 ![Database](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/table-1.jpg?raw=true "Database")
+
 ![Database](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/table-2.jpg?raw=true "Database")
 
 ## Running di local
 - Karena menggunakan metarepo, lakukan `git clone` pada metareponya kezbek-solution.
 - Gunakan `git submodule update --init --recursive` untuk update/fetch submodules.
-- Setup env variables untuk setiap submodule repo sesuai dengan contoh file `compose.env` yang sudah disiapkan.
-- Jalankan perintah `docker-compose up`
-- Setelah semua service up, dapat langsung dicoba.
-- Untuk setiap service terdapat documentasi menggunakan swagger, contoh service authenticator: http://localhost:8001/apidoc. Untuk detail port yang digunakan adalah sebagai berikut:
-1. [Service Authenticator](http://localhost:8001/apidoc/)
-2. [Service Customer](http://localhost:8002/apidoc/)
-3. [Service Loyalty](http://localhost:8003/apidoc/)
-4. [Service Mailer](http://localhost:8004/apidoc/)
-5. [Service Partner](http://localhost:8005/apidoc/)
-6. [Service Promo](http://localhost:8006/apidoc/)
-7. [Service Transaction](http://localhost:8007/apidoc/)
-8. [Service Wallet](http://localhost:8008/apidoc/)
+- Lakukan `npm install` di setiap submodule yang ada atau jika menggunakan linux/macos, dapat langsung running file `setup.sh` yang sudah disiapkan.
+- Pada docker compose, environment variable menggunakan file `compose.env` yang sudah disiapkan atau dapat diatur sendiri sesuai kebutuhan di local.
+- Jalankan perintah `docker-compose up -d --build`
+- Setelah semua service up, dapat langsung dicoba, tentu dengan melakukan loading data terlebih dahulu dengan perintah berikut di folder `sql`
 
+`docker exec -i mysql mysql -uroot -pS3cret db_customer < customer.sql`
+
+`docker exec -i mysql mysql -uroot -pS3cret db_partner < partner.sql`
+
+`docker exec -i mysql mysql -uroot -pS3cret db_promo < promo.sql`
+
+`docker exec -i postgresql psql -U postgres db_loyalty < loyalty.sql`
+
+- Untuk setiap service terdapat documentasi menggunakan swagger, contoh service authenticator: http://localhost:8000/authenticator/apidoc. Untuk detail port yang digunakan adalah sebagai berikut:
+1. [Service Authenticator](http://localhost:8000/authenticator/apidoc)
+2. [Service Customer](http://localhost:8000/customer/apidoc)
+3. [Service Loyalty](http://localhost:8000/loyalty/apidoc)
+4. [Service Mailer](http://localhost:8000/mailer/apidoc)
+5. [Service Partner](http://localhost:8000/partner/apidoc)
+6. [Service Promo](http://localhost:8000/promo/apidoc)
+7. [Service Transaction](http://localhost:8000/transaction/apidoc)
+8. [Service Wallet](http://localhost:8000/wallet/apidoc)
+
+Contoh container yang sedang running
 
 ![Container Running](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/container.jpg?raw=true "Container Running")
 

@@ -1,6 +1,31 @@
 version: '3'
 
 services:
+  kong:
+    build:
+      context: ./kong
+      dockerfile: Dockerfile
+    container_name: kong
+    restart: unless-stopped
+    command: "kong start"
+    volumes:
+      - ./kong/conf/kong.yml:/usr/local/kong/declarative/kong.yml
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+      KONG_PROXY_LISTEN_SSL: 0.0.0.0:8443
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    networks:
+      - backend
+
   rabbitmq:
     image: rabbitmq:management
     restart: on-failure
@@ -73,7 +98,7 @@ services:
     env_file:
       - ./authenticator/compose.env
     ports:
-      - "8001:9001"
+      - "9001:9001"
     volumes:
       - ./authenticator:/var/www/authenticator
     networks:
@@ -92,7 +117,7 @@ services:
     env_file:
       - ./customer/compose.env
     ports:
-      - "8002:9002"
+      - "9002:9002"
     volumes:
       - ./customer:/var/www/customer
     networks:
@@ -112,7 +137,7 @@ services:
     env_file:
       - ./loyalty/compose.env
     ports:
-      - "8003:9003"
+      - "9003:9003"
     volumes:
       - ./loyalty:/var/www/loyalty
     networks:
@@ -132,7 +157,7 @@ services:
     env_file:
       - ./mailer/compose.env
     ports:
-      - "8004:9004"
+      - "9004:9004"
     volumes:
       - ./mailer:/var/www/mailer
     networks:
@@ -151,7 +176,7 @@ services:
     env_file:
       - ./partner/compose.env
     ports:
-      - "8005:9005"
+      - "9005:9005"
     volumes:
       - ./partner:/var/www/partner
     networks:
@@ -171,7 +196,7 @@ services:
     env_file:
       - ./promo/compose.env
     ports:
-      - "8006:9006"
+      - "9006:9006"
     volumes:
       - ./promo:/var/www/promo
     networks:
@@ -191,7 +216,7 @@ services:
     env_file:
       - ./transaction/compose.env
     ports:
-      - "8007:9007"
+      - "9007:9007"
     volumes:
       - ./transaction:/var/www/transaction
     networks:
@@ -211,7 +236,7 @@ services:
     env_file:
       - ./wallet/compose.env
     ports:
-      - "8008:9008"
+      - "9008:9008"
     volumes:
       - ./wallet:/var/www/wallet
     networks:

@@ -1,0 +1,68 @@
+_format_version: "2.1"
+_transform: true
+
+services:
+  - name: authenticator
+    host: authenticator
+    port: 9001
+    protocol: http
+    routes:
+      - name: authenticator
+        paths:
+          - /authenticator
+  - name: customer
+    host: customer
+    port: 9002
+    protocol: http
+    routes:
+      - name: customer
+        paths:
+          - /customer
+  - name: loyalty
+    host: loyalty
+    port: 9003
+    protocol: http
+    routes:
+      - name: loyalty
+        paths:
+          - /loyalty
+  - name: mailer
+    host: mailer
+    port: 9004
+    protocol: http
+    routes:
+      - name: mailer
+        paths:
+          - /mailer
+  - name: partner
+    host: partner
+    port: 9005
+    protocol: http
+    routes:
+      - name: partner
+        paths:
+          - /partner
+  - name: promo
+    host: promo
+    port: 9006
+    protocol: http
+    routes:
+      - name: promo
+        paths:
+          - /promo
+  - name: transaction
+    host: transaction
+    port: 9007
+    protocol: http
+    routes:
+      - name: transaction
+        paths:
+          - /transaction
+  - name: wallet
+    host: wallet
+    port: 9008
+    protocol: http
+    routes:
+      - name: wallet
+        paths:
+          - /wallet
