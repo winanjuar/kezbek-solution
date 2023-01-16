@@ -17,9 +17,145 @@ Meskipun tech stack yang digunakan berbeda, namun secara keseluruhan service ser
 ![Communication Strategy](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/communication.jpg?raw=true "Communication Strategy")
 
 Berikut adalah rancangan DB yang ada di KezBek Solution.
-![Database](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/table-1.jpg?raw=true "Database")
 
-![Database](https://github.com/winanjuar/kezbek-solution/blob/main/documentation/table-2.jpg?raw=true "Database")
+
+```mermaid
+erDiagram
+LoyaltyTierMaster {
+    string id PK
+    string name
+    int level
+    int max_trx
+}
+
+LoyaltyTierJourney {
+    string current_tier FK
+    string next_1
+    string prev_1
+    string prev_2
+}
+
+LoyaltyTierMaster ||--|| LoyaltyTierJourney : has
+
+LoyaltyPointConfig {
+    string id PK
+    int at_trx
+    int point
+    string tier_id FK
+}
+
+LoyaltyTierMaster ||--o{ LoyaltyPointConfig : has
+
+LoyaltyCustomerActual {
+    string customer_id PK
+    string transaction_id
+    datetime transaction_time
+    int point
+    int total_trx
+    string remark
+    string tier_id FK
+}
+
+LoyaltyTierMaster ||--o{ LoyaltyCustomerActual : actuals
+
+LoyaltyCustomerHistory {
+    string transaction_id PK
+    datetime transaction_time
+    string customer_id
+    int point
+    int total_trx
+    string remark
+    string tier_id FK
+}
+
+LoyaltyTierMaster ||--o{ LoyaltyCustomerHistory : histories
+
+PromoProgram {
+    string id PK
+    string code_key
+    int quota
+    datetime period_start
+    datetime period_end
+}
+
+PromoConfig {
+    string id PK
+    int quantity
+    int min_trx
+    int max_trx
+    decimal prosentase
+    string program_id FK
+}
+
+PromoProgram ||--o{ PromoConfig : has
+```
+```mermaid
+erDiagram
+Customer {
+  string id PK
+  string cognito_id
+  string name
+  string username
+  string email
+  string phone
+}
+
+Partner {
+  string id PK
+  string name
+  string api_key
+  string api_secret
+  string pic_email
+  string pic_phone
+}
+
+TransactionDetails {
+  string transaction_id PK
+  string transaction_origin_id
+  datetime transaction_time
+  string customer_id
+  string customer_name
+  string customer_email
+  string customer_phone
+  string tier
+  string remark
+  int total_trx
+  string partner_id
+  string partner_api_key
+  string partner_name
+  int quantity
+  int act_trx
+  string promo_code
+  decimal prosentase
+  int point_transaction
+  int point_loyalty
+  int point_total
+}
+
+WalletTransaction {
+  string transaction_id PK
+  string customer_id
+  datetime transaction_time
+  string transaction_type
+  string transaction_description
+  int amount
+}
+
+WalletBalanceActual {
+  string customer_id PK
+  string last_transaction_id
+  datetime last_transaction_time
+  int current_balance
+}
+
+WalletBalanceHistory {
+  string transaction_id PK
+  datetime transaction_time 
+  string customer_id
+  int current_balance
+}
+```
+
 
 ## Running di local
 - Karena menggunakan metarepo, lakukan `git clone` pada metareponya kezbek-solution.
